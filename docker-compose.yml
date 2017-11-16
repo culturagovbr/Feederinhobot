@@ -4,4 +4,4 @@ services:
     container_name: feed_bot_teste
     build: .
     environment:
-      - BOT_TOKEN=${BOT_TOKEN}
+      - FEED_TOKEN=${FEED_TOKEN}
