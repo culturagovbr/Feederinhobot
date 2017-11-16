@@ -137,7 +137,7 @@ def error(bot, update, error):
 
 def main():
 
-    updater = Updater(os.environ.get('BOT_TOKEN'))
+    updater = Updater(os.environ.get('FEED_TOKEN'))
 
 
     dp = updater.dispatcher
