@@ -6,4 +6,4 @@ WORKDIR /source
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "/source/bot.py"] 
+CMD ["python","/source/bot.py"] 
