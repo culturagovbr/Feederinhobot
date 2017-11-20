@@ -32,17 +32,17 @@ def alarm(bot, job):
         read.close()
         cont = 0
         for x in range(len(linha)-1):
-            print ('Iniciando codigo')
+            print ('Iniciando codigo: '+str(time.strftime("%Y-%m-%d %H:%M:%S" )))
             sql = 'SELECT post_id FROM feedero WHERE feed_link = (?)'
             rodar = 1
             post = feedparser.parse(linha[x])
-            print ('Link:'+linha[x])
+            print ('Link: '+linha[x]+' :'+str(time.strftime("%Y-%m-%d %H:%M:%S" )))
             curs = conn.cursor()
             curs.execute(sql,(linha[x],))
             result = curs.fetchone()
             # verifica se o feed tem erro de bozo
             if (post['bozo'] == 1):
-                print('com bozo')
+                print('com bozo: '+str(time.strftime("%Y-%m-%d %H:%M:%S" )))
                 url = (linha[x])
                 ler = urlopen(url)
                 soup = BeautifulSoup(ler,'html.parser')
@@ -73,7 +73,7 @@ def alarm(bot, job):
                         else:
                             cont+=1
                 else:
-                    print('nao existe')
+                    print('nao existe'+str(time.strftime("%Y-%m-%d %H:%M:%S" )))
                     sql = 'INSERT INTO feedero VALUES (?,?)'
                     curs = conn.cursor()
                     params = (posts[0].text,linha[x])
@@ -100,7 +100,7 @@ def alarm(bot, job):
                             else:
                                 cont+=1
                 else:
-                    print('não existe')
+                    print('não existe'+str(time.strftime("%Y-%m-%d %H:%M:%S" )) )
                     sql = 'INSERT INTO feedero VALUES (?,?)'
                     curs = conn.cursor()
                     params = (post['entries'][0]['id'],linha[x])
@@ -111,7 +111,7 @@ def alarm(bot, job):
         conn.close()
 
     except():
-        bot.sendMessage(job.context, "Erros-------------------------------------------------------")
+        bot.sendMessage(chat_id, "Erros-------------------------------------------------------")
 
 
 def set_timer(bot, update, args, job_queue, chat_data):
