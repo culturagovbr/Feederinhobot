@@ -1,4 +1,3 @@
-
 from telegram.ext import Updater, CommandHandler
 import logging
 import os
@@ -44,7 +43,13 @@ def alarm(bot, job):
             if (post['bozo'] == 1):
                 print('com bozo: '+str(time.strftime("%Y-%m-%d %H:%M:%S" )))
                 url = (linha[x])
-                ler = urlopen(url)
+                try:
+                    ler = urlopen(url)
+                except Exception as e:
+                    print ('Erro no link: ' + url +'\n'+' Erro:'+str(e)+'  ' +str(time.strftime("%Y-%m-%d %H:%M:%S" )))
+                    conn.close()
+                    x+=1
+                    break
                 soup = BeautifulSoup(ler,'html.parser')
                 #titulo da noticia
                 titles = soup.find_all('title')
@@ -110,16 +115,18 @@ def alarm(bot, job):
                     conn.commit()
         conn.close()
 
-    except():
-        bot.sendMessage(chat_id, "Erros-------------------------------------------------------")
-
+    except Exception as e:
+        print ('Erro' +str(time.strftime("%Y-%m-%d %H:%M:%S" )))
+        conn.close()
+        print(e)
+        pass
 
 def set_timer(bot, update, args, job_queue, chat_data):
 
     chat_id = update.message.chat_id
     try:
 
-        due = 240  #Tempo em segundos!
+        due = 610  #Tempo em segundos!
 
 
         job = job_queue.run_repeating(alarm, due, context=chat_id)
