@@ -2,7 +2,7 @@ version: '2'
 services:
   feed_bot:
     volumes:
-     - /home/minc1/feed/:/source
+     - ./:/source
     container_name: feed_bot_teste
     build: .
     environment:
